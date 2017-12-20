@@ -1,0 +1,19 @@
+.topic_icon{
+    height: 48px;
+    width: 48px;
+    margin-top: -10px;
+}
+
+.topic_title{
+    display: inline-block;
+    margin-top: 64px;
+}
+
+.topic_title_first{
+    display: inline-block;
+    margin-top: 16px;
+}
+
+.topic_content{
+    font-size: 18px;
+}

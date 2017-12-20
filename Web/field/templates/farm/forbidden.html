@@ -1,0 +1,20 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+{% block css_js_reference %}
+{% endblock css_js_reference %}
+
+{% block title %}设置{% endblock title %}
+
+{% block toolbar_body %}
+
+    <div class="container text-center">
+        <img src="{% static 'common/icon/ic_forbidden_red.svg' %}" height="200px" style="margin-top: 60px;">
+
+        <p style="font-size: 36px;margin-top: 36px;" >禁止访问</p>
+        <p style="font-size: 16px;margin-top: 22px;" >您没有权限访问此页面，若要访问此页面，请与管理员取得联系</p>
+
+    </div>
+
+        
+{% endblock toolbar_body %}

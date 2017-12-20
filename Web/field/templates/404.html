@@ -1,0 +1,18 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+
+{% block title %}404 Not Found{% endblock title %}
+
+{% block toolbar_body %}
+
+    <div class="container text-center">
+        <img src="{% static 'common/img/img_404.svg' %}" height="400px" style="margin-top: 60px;">
+
+        <p style="font-size: 36px;" >404 Not Found</p>
+        <p style="font-size: 16px;margin-top: 22px;" >您来到了一片荒地，这里啥都没有</p>
+        <a href="{% url 'farm:farm_index' %}"><p style="font-size: 16px;margin-top: 22px;" >还是回去吧</p></a>
+
+    </div>
+
+{% endblock toolbar_body %}

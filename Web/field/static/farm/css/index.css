@@ -1,0 +1,15 @@
+.block_state{
+    border: 1px solid #999;
+    padding: 16px;
+}
+
+.block_state_img{
+    float: left;
+    width: 144px;
+    height: 144px;
+}
+
+.block_state_title{
+    font-size: 64px;
+    width: 140px;
+}

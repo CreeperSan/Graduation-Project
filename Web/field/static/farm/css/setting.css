@@ -1,0 +1,9 @@
+#ex1Slider .slider-selection {
+    background: #5ab75d;
+}
+
+.list_group_delete{
+    float: right; 
+    color: #f00;
+    cursor: pointer;
+}

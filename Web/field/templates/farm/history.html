@@ -1,0 +1,353 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic_item.css' %}" type="text/css" />
+    <script src="{% static 'lib/chart/Chart.js' %}"></script>
+{% endblock css_js_reference %}
+
+{% block title %}历史记录{% endblock title %}
+
+{% block toolbar_body %}
+
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_temperature.png' %}">
+    <h3 class="topic_title_first">温度历史记录</h3>
+    <hr>
+    <div class="container topic_item_container" >
+        <div class="row clearfix ">
+            <div class="col-md-6 column" style="height: 400px;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>记录</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2017-12-01 15:06:00</td>
+                            <td>25℃</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:15</td>
+                            <td>25℃</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:30</td>
+                            <td>25℃</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:45</td>
+                            <td>25℃</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:00</td>
+                            <td>25℃</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:15</td>
+                            <td>25℃</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:30</td>
+                            <td>25℃</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:45</td>
+                            <td>25℃</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 column" style="height: 100%;">
+                <canvas class="line_chart" width="400px" height="250px;"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_humidity.png' %}">
+    <h3 class="topic_title">空气湿度历史记录</h3>
+    <hr>
+    <div class="container topic_item_container" >
+        <div class="row clearfix ">
+            <div class="col-md-6 column" style="height: 400px;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>记录</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2017-12-01 15:06:00</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:15</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:30</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:45</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:00</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:15</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:30</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:45</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:08:00</td>
+                            <td>65%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 column" style="height: 100%;">
+                <canvas class="line_chart" width="400px" height="250px;"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_dirt_humidity.png' %}">
+    <h3 class="topic_title">土壤湿度历史记录</h3>
+    <hr>
+    <div class="container topic_item_container" >
+        <div class="row clearfix ">
+            <div class="col-md-6 column" style="height: 400px;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>记录</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2017-12-01 15:06:00</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:15</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:30</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:45</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:00</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:15</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:30</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:45</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:08:00</td>
+                            <td>65%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 column" style="height: 100%;">
+                <canvas class="line_chart" width="400px" height="250px;"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_operation.png' %}">
+    <h3 class="topic_title">操作记录</h3>
+    <hr>
+    <div class="container topic_item_container" >
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>操作者</th>
+                            <th>操作记录</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2017-12-01 15:06:00</td>
+                            <td>用户 : creepersan</td>
+                            <td>打开降温开关</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:15</td>
+                            <td>用户 : 管理员</td>
+                            <td>打开降温开关%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:30</td>
+                            <td>用户 : 嗯?</td>
+                            <td>65%</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:45</td>
+                            <td>定时任务</td>
+                            <td>关灯</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:00</td>
+                            <td>系统异常调控</td>
+                            <td>降温</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:15</td>
+                            <td>定时任务</td>
+                            <td>施肥</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:30</td>
+                            <td>定时任务</td>
+                            <td>浇水</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:45</td>
+                            <td>用户 : 管理员</td>
+                            <td>施肥</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:08:00</td>
+                            <td>用户 : 管理员</td>
+                            <td>降温</td>
+                        </tr>
+                    </tbody>
+                </table>
+    </div>
+
+
+
+
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_alarm.png' %}">
+    <h3 class="topic_title">异常记录</h3>
+    <hr>
+    <div class="container topic_item_container" >
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>记录</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2017-12-01 15:06:00</td>
+                            <td>温度过高</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:15</td>
+                            <td>温度过高</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:30</td>
+                            <td>温度过高</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:06:45</td>
+                            <td>温度过高</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:00</td>
+                            <td>温度过高</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:15</td>
+                            <td>温度过高</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:30</td>
+                            <td>温度过高</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:07:45</td>
+                            <td>温度过高</td>
+                        </tr>
+                        <tr>
+                            <td>2017-12-01 15:08:00</td>
+                            <td>温度过高</td>
+                        </tr>
+                    </tbody>
+                </table>
+    </div>
+
+{% endblock toolbar_body %}
+
+{% block js_rescoures %}
+
+        var options = {
+            type: 'line',
+            data: {
+                 labels : ["1","2","3","4","5","6","7"],
+                 datasets : [
+                     {
+                        label : '',
+                        backgroundColor: 'rgba(90, 183, 93, 0.2)',
+                        borderColor    : 'rgba(90, 183, 93, 1.0)',
+                        borderWidth: 1,
+                        data : [65,59,90,81,56,55,40],
+                     }
+                 ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        }
+
+
+
+    new Chart($(".line_chart").get(0).getContext("2d"),options );
+    new Chart($(".line_chart").get(1).getContext("2d"),options );
+    new Chart($(".line_chart").get(2).getContext("2d"),options );
+
+{% endblock js_rescoures %}

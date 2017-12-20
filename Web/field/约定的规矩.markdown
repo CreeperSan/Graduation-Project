@@ -1,0 +1,14 @@
+## 弹出的信息框
+代码内容统一为
+``` html
+<div id="dialog_background" style="display: none;position: fixed;background-color:rgba(0,0,0,0.5);width: 100%;height: 100%;z-index: 1;">
+    <div id="dialog_self" style="vertical-align:center;position:relative;margin:auto;top: 50%;transform: translateY(-50%);background-color:#fff;max-width: 1280px;border-radius: 8px;padding-top: 16px;padding-bottom: 16px;">
+        <a id="dialog_button" style="float: right;padding-right: 16px;" href=""><img src="{% static 'common/icon/ic_close_36px.svg' %}"></a>
+        <h2 id="dialog_title" style="padding-left: 32px;padding-right: 32px" >标题</h2>
+        <hr id="dialog_diver">
+        <div id="dialog_content">
+            <!-- 主题内容 -->
+        </div>
+    </div>
+</div>
+```

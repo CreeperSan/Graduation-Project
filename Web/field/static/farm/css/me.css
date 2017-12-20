@@ -1,0 +1,20 @@
+.me_head_img{
+    border: 6px solid #f90;
+    border-radius: 100%;
+    padding: 8px;
+    margin-top: 48px;
+    height: 200px;
+    width: 200px;
+}
+
+.me_username_p{
+    font-size: 26px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.me_info_p{
+    font-size: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}

@@ -1,0 +1,51 @@
+必带的键
+
+result Int 返回结果是否成功
+	 ：1  请求成功	
+	 ：0  权限不足
+	 : -1 要请求的API不存在
+	 : -2 参数不正确
+	 ：-3 用户尚未登录（登陆信息已过期）
+	 ：-4 未知错误
+	 
+
+允许请求的部分	 
+	 
+	 
+自定义设备
+	请求 api/device/
+	方法1 获取自定义设备状态
+		GET 无参数
+		return 	result
+				device1_state 0/1 0为关 1为开
+				device2_state 0/1
+				device3_state 0/1
+				device4_state 0/1
+	方法2 设置自定义设备状态
+		POST 	device1_num (可选)
+				device2_num (可选)
+				device3_num (可选)
+				device4_num (可选)
+		return 	result
+				device1_state 0/1 0为关 1为开
+				device2_state 0/1
+				device3_state 0/1
+				device4_state 0/1
+				
+环境光控制
+	请求 api/light/
+	方法1 获取光控信息
+		GET 	无参数
+		return 	result
+				is_light_on 0/1		是否开灯
+				light_color 0~6		灯光颜色
+				light_level 0~10	灯光强度
+	方法2 设置光控参数
+		POST	is_light_on (可选)
+				light_color (可选)
+				light_level (可选)
+		return 	result
+				is_light_on 0/1		是否开灯
+				light_color 0~6		灯光颜色
+				light_level 0~10	灯光强度
+		

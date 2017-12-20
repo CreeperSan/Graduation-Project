@@ -1,0 +1,129 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic_item.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic_action_button.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'common/css/icon.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'common/css/dialog.css' %}" type="text/css" />
+    <script src="{% static 'common/js/dialog.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lib/bootstrap-switch/bootstrap-switch.css' %}" type="text/css" />
+    <script src="{% static 'lib/bootstrap-switch/bootstrap-switch.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'user/css/index.css' %}" type="text/css" />
+    <script src="{% static 'user/js/index.js' %}"></script>
+    <script src="{% static 'common/js/ajax_request.js' %}"></script>
+    <script src="{% static 'common/js/anime.js' %}"></script>
+{% endblock css_js_reference %}
+
+{% block title %}用户管理{% endblock title %}
+
+{% block toolbar_dialog %}
+    <div id="dialog_background" class="dialog_background" style="display: none;">
+        <div id="dialog_self" class="dialog_self">
+            <a id="dialog_close" class="dialog_close" href="javascript:void(0)" onclick="hideDialog()"><img src="{% static 'common/icon/ic_close_36px.svg' %}"></a>
+            <p id="dialog_title" class="dialog_title" >创建账户</p>
+            <hr>
+            <div style="padding-left: 32px;padding-right: 32px;">
+                <!-- 主体内容 -->
+                <p id="dialog_hint_p">用户创建于 2016年12月20日 16:20:20</p>
+                <div id="dialog_username_div" class="row clearfix">
+                    <div class="input-group" style="width: 100%;">
+                        <span class="input-group-addon" style="width: 84px;">用户名</span>
+                        <input id="dialog_username_input" type="text" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" class="form-control" placeholder="必填，用户名是用户的登录凭据" maxlength="18">
+                    </div>
+                </div>
+                <div id="dialog_nickname_div" class="row clearfix">
+                    <div class="input-group" style="width: 100%;">
+                        <span class="input-group-addon" style="width: 84px;">昵称</span>
+                        <input id="dialog_nickname_input" type="text" class="form-control" placeholder="选填，作为用户的名字显示" maxlength="30">
+                    </div>
+                </div>
+                <div id="dialog_password_div" class="row clearfix">
+                    <div class="input-group" style="width: 100%;">
+                        <span class="input-group-addon" style="width: 84px;">密码</span>
+                        <input id="dialog_password_input" type="text" class="form-control" placeholder="必填，用户的登陆密码" maxlength="18">
+                    </div>
+                </div>
+                <div id="dialog_password_confirm_div" class="row clearfix">
+                    <div class="input-group" style="width: 100%;">
+                        <span class="input-group-addon" style="width: 84px;">重复密码</span>
+                        <input id="dialog_password_confirm_input" type="text" class="form-control" placeholder="必填，重复登陆密码" maxlength="18">
+                    </div>
+                </div>
+                <div id="dialog_switch_div" class="row clearfix">
+                    <div class="col-md-6 column">
+                        <span>是否工作人员</span>
+                        <input id="dialog_is_stuff_switch" class="switch" type="checkbox" name="isStuff">
+                    </div>
+                    <div class="col-md-6 column">
+                        <span>是否正在活动</span>
+                        <input id="dialog_is_active_switch" class="switch" type="checkbox" name="isActive" checked>
+                    </div>
+                </div>
+                <div id="dialog_info_div" class="row clearfix">
+                    <div class="col-md-12 column panel panel-default" style="padding: 0px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">用户简介</h3>
+                        </div>
+                        <input id="dialog_info" class="panel-body" type="text" name="info" style="width: 100%;border: 0px;" placeholder="用户的简短介绍">
+                    </div>
+                </div>
+                <!-- 确定 取消按钮 -->
+                <hr id="dialog_content_button_hr">
+                <div id="dialog_content_button" style="text-align:right;margin-right: 32px;">
+                    <button onclick="onDelete()" id="dialog_content_delete" style="padding: 16px 26px 16px 26px;font-size: 16px;border: 0px;background-color: rgba(0,0,0,0);color: #f00;float: left;">删除</button>
+                    <button onclick="onConfirm()" id="dialog_content_confirm" style="padding: 16px 26px 16px 26px;font-size: 16px;border: 0px;background-color: rgba(0,0,0,0);color: rgb(90,183,93);">确定</button>
+                    <button onclick="onCancel()" style="padding: 16px 26px 16px 26px;font-size: 16px;border: 0px;background-color: rgba(0,0,0,0);">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock toolbar_dialog %}
+
+{% block toolbar_body %}
+
+    
+
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_user_list.png' %}">
+    <h3 class="topic_title" style="margin-top: 16px;">用户列表</h3>
+    <button class="btn btn-success topic_action_button" onclick="showAsCreateUserDialog()">添加用户</button>
+    <hr>
+    <div class="container" >
+        <div class="row clearfix">
+
+        {% for user_item in userList %}
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <img class="topic_icon" src="{% if user_item.is_superuser %}{% static 'common/icon/ic_admin.png' %}{% else %}{% if user_item.is_staff %}{% static 'common/icon/ic_stuff.png' %}{% else %}{% static 'common/icon/ic_guest.png' %}{% endif %}{% endif %}" style="height: 96px;width: 96px;display: inline-block;float: left;margin-right: 16px;">
+                <p style="font-size: 18px;">{{ user_item.nickname }}</p>
+                <p>{{ user_item.username }}</p>
+                <p style="color: #aaa;">{% if user_item.is_superuser %}管理员{% else %}{% if user_item.is_staff %}工作人员{% else %}访客{% endif %}{% endif %} {% if user_item.is_active %}正在活动{% else %}已停用{% endif %}</p>
+            </div>
+            <div class="topic_item_cell_action">
+            {% if not user_item.is_superuser %}
+                <img id="user_{{ user_item.username }}" onclick="onEdit(this)" class="icon_clickable" src="{% static 'common/icon/ic_edit_24px.svg' %}">
+            {% endif %}
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+        
+
+    </div>
+
+
+
+{% endblock toolbar_body %}
+
+
+{% block js_rescoures %}
+
+var URL_HEAD_ADMIN = "{% static 'common/icon/ic_admin.png' %}";
+var URL_STUFF_ADMIN = "{% static 'common/icon/ic_stuff.png' %}";
+var URL_GUEST_ADMIN = "{% static 'common/icon/ic_guest.png' %}";
+var API_USER = "{% url 'api:api_user' %}"
+
+var userJson = {{ jsonData|safe }};
+{% endblock js_rescoures %}

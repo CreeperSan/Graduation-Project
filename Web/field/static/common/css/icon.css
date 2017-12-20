@@ -1,0 +1,15 @@
+.icon_clickable{
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.3s;
+    border-radius: 100%;
+    transition-duration: 0.3s;
+    background-color: rgba(238,238,238,0);
+}
+
+.icon_clickable:hover{
+    border-radius: 100%;
+    background-color: rgba(238,238,238,1);
+    opacity: 1;
+}

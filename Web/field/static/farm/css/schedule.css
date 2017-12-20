@@ -1,0 +1,44 @@
+.schedule_item{
+    height: 100%;
+}
+
+.topic_title{
+    margin-top: 16px;
+}
+
+.schedule_item_row{
+    display: table-row;
+    width: 100%;
+}
+
+.schedule_item_title{
+    height: 100%;
+    display: table-cell;
+    width: 100%;
+}
+
+.schedule_item_repeat{
+    color: #aaa;
+}
+
+.schedule_item_switch_div{
+    display: table-cell;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.schedule_item_switch{
+    height: 100%;
+    vertical-align: middle;
+    margin: auto;
+    max-width: 80px;
+}
+
+.schedule_item_more_div{
+    display: table-cell;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    padding: 16px;
+}

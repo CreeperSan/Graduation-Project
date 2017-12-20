@@ -1,0 +1,11 @@
+.dialogUserNameInput{
+    width: 100%;
+}
+
+.row{
+    margin-top: 16px;
+}
+
+.input-group-addon{
+    background-color: #fff;
+}

@@ -1,0 +1,90 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+{% block title %}定时{% endblock title %}
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic_item.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic_action_button.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/schedule.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'common/css/icon.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'lib/bootstrap-switch/bootstrap-switch.css' %}" type="text/css" />
+    <script src="{% static 'lib/bootstrap-switch/bootstrap-switch.js' %}"></script>
+{% endblock css_js_reference %}
+
+{% block toolbar_body %}
+        
+
+        <img class="topic_icon" src="{% static 'common/icon/ic_clock.png' %}">
+        <button class="btn btn-success topic_action_button">添加定时</button>
+        <h3 class="topic_title topic_title">定时</h3>
+        <hr>
+        <div class="container" >
+            <div class="schedule_item_row">
+                <div class="schedule_item_title">
+                    <p class="topic_content" >定时1</p>
+                    <p >12:00</p>
+                    <p class="schedule_item_repeat">每周一重复</p>
+                </div>
+                <div class="schedule_item_switch_div" >
+                    <div class="schedule_item_switch">
+                        <input  class="pull-right switch" type="checkbox" name="my-checkbox" checked="checked">
+                    </div>
+                </div>
+                <div class="schedule_item_more_div">
+                    <img class="icon_clickable" src="{% static 'common/icon/ic_more_vert.svg' %}">
+                </div>
+            </div>
+            <hr>
+        </div>
+
+
+        <div class="container" >
+            <div class="schedule_item_row">
+                <div class="schedule_item_title">
+                    <p class="topic_content" >定时2</p>
+                    <p >12:00</p>
+                    <p class="schedule_item_repeat">每隔50天重复</p>
+                </div>
+                <div class="schedule_item_switch_div" >
+                    <div class="schedule_item_switch">
+                        <input  class="pull-right switch" type="checkbox" name="my-checkbox" checked="checked">
+                    </div>
+                </div>
+                <div class="schedule_item_more_div">
+                    <img class="icon_clickable" src="{% static 'common/icon/ic_more_vert.svg' %}">
+                </div>
+            </div>
+            <hr>
+        </div>
+
+
+        <div class="container" >
+            <div class="schedule_item_row">
+                <div class="schedule_item_title">
+                    <p class="topic_content" >定时3</p>
+                    <p >12:00</p>
+                    <p class="schedule_item_repeat">50天后执行</p>
+                </div>
+                <div class="schedule_item_switch_div" >
+                    <div class="schedule_item_switch">
+                        <input  class="pull-right switch" type="checkbox" name="my-checkbox" checked="checked">
+                    </div>
+                </div>
+                <div class="schedule_item_more_div">
+                    <img class="icon_clickable" src="{% static 'common/icon/ic_more_vert.svg' %}">
+                </div>
+            </div>
+            <hr>
+        </div>
+
+    
+{% endblock toolbar_body %}
+
+{% block js_rescoures %}
+    $.fn.bootstrapSwitch.defaults.onColor = 'success';
+    $.fn.bootstrapSwitch.defaults.offColor = 'default';
+    $('#test_switch1').bootstrapSwitch();
+    $('.switch').bootstrapSwitch();
+{% endblock js_rescoures %}
