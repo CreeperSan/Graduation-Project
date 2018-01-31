@@ -361,7 +361,7 @@
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>0</uC99>
+            <uC99>1</uC99>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>
@@ -373,7 +373,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F40_41xxx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\inc;..\HARDWARE;..\HARDWARE\AIR_TEMPERATURE_HUMIDITY;..\HARDWARE\BUZZER;..\HARDWARE\CUSTOM_DEVICES;..\HARDWARE\DIRT_HUMIDITY;..\HARDWARE\DIRT_TEMPERATURE;..\HARDWARE\FAN;..\HARDWARE\FLASH;..\HARDWARE\LED;..\HARDWARE\LIGHT;..\HARDWARE\NETWORK;..\HARDWARE\UART;..\HARDWARE\WATERING;..\HARDWARE\TIM;..\HARDWARE\SPI;..\HARDWARE\AD</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\inc;..\HARDWARE;..\HARDWARE\AIR_TEMPERATURE_HUMIDITY;..\HARDWARE\BUZZER;..\HARDWARE\CUSTOM_DEVICES;..\HARDWARE\DIRT_HUMIDITY;..\HARDWARE\DIRT_TEMPERATURE;..\HARDWARE\FAN;..\HARDWARE\FLASH;..\HARDWARE\LED;..\HARDWARE\LIGHT;..\HARDWARE\UART;..\HARDWARE\WATERING;..\HARDWARE\TIM;..\HARDWARE\SPI;..\HARDWARE\AD;..\HARDWARE\DHT11;..\HARDWARE\DS18B20;..\HARDWARE\NETWORK;..\HARDWARE\NETWORK\W5500</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -783,6 +783,21 @@
               <FileName>AD.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\AD\AD.c</FilePath>
+            </File>
+            <File>
+              <FileName>DHT11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\DHT11\DHT11.c</FilePath>
+            </File>
+            <File>
+              <FileName>DS18B20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\DS18B20\DS18B20.c</FilePath>
+            </File>
+            <File>
+              <FileName>NETWORK.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\NETWORK\NETWORK.c</FilePath>
             </File>
           </Files>
         </Group>
