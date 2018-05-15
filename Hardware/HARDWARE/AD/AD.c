@@ -13,7 +13,7 @@ void AD_Light_Init(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1,ENABLE);//使能ADC1时钟
 	
 	//先初始化ADC1通道5 IO口
-	gpio_structure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_3;//PA5 通道5,PA3 通道3
+	gpio_structure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_3;//PA3 通道3
 	gpio_structure.GPIO_Mode = GPIO_Mode_AN;//模拟输入
 	gpio_structure.GPIO_PuPd = GPIO_PuPd_NOPULL;//不带上下拉
 	GPIO_Init(GPIOA,&gpio_structure);//初始化  

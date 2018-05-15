@@ -1,0 +1,352 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic_item.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/history.css' %}" type="text/css" />
+    <script src="{% static 'lib/vue/vue.js' %}"></script>
+    <script src="{% static 'lib/chart/Chart.js' %}"></script>
+    <script src="{% static 'common/js/ajax_request.js' %}"></script>
+    <script src="{% static 'common/js/anime.js' %}"></script>
+    <script src="{% static 'farm/js/history.js' %}"></script>
+{% endblock css_js_reference %}
+
+{% block title %}历史记录{% endblock title %}
+
+{% block toolbar_body %}
+    <div id="app">
+        
+        <img class="topic_icon" src="{% static 'common/icon/ic_temperature.png' %}">
+        <h3 class="topic_title_first">温度历史记录</h3>
+        <hr>
+        <div class="row clearfix selectionDiv">
+            <div style="float: right;">
+                <a href="javascript:void(0)" style="padding: 16px;" v-on:click="onToggleShowAdvanced">[[ getShowAdvancedText() ]]</a>
+                <button class="btn btn-success" v-on:click="onGetData">检索数据</button>
+            </div>
+            <div class="input-group historyFilterInput" id="tempQueryYearDiv">
+                <span class="input-group-addon historyFilterInputHint">年</span>
+                <input id="tempQueryYear" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,4)" class="form-control"  min="2017" max="3000" maxlength="4">
+            </div>
+            <div class="input-group historyFilterInput" id="tempQueryMonthDiv">
+                <span class="input-group-addon historyFilterInputHint">月</span>
+                <input id="tempQueryMonth" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,2)" class="form-control"  min="1" max="12" maxlength="2">
+            </div>
+            <div class="input-group historyFilterInput" id="tempQueryDayDiv">
+                <span class="input-group-addon historyFilterInputHint">日</span>
+                <input id="tempQueryDay" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,2)" class="form-control"  min="1" max="31" maxlength="2">
+            </div>
+        </div>
+        <div class="row clearfix selectionDiv selectionAdvanced" v-if='isShowAdvcanced'>
+            <div class="input-group historyFilterInput" id="tempQueryHourDiv">
+                <span class="input-group-addon historyFilterInputHint">时</span>
+                <input id="tempQueryHour" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,2)" class="form-control"  min="0" max="23" maxlength="2">
+            </div>
+            <div class="input-group historyFilterInput" id="tempQueryMinuteDiv">
+                <span class="input-group-addon historyFilterInputHint">分</span>
+                <input id="tempQueryMinute" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,2)" class="form-control"  min="0" max="59" maxlength="2">
+            </div>
+            <div class="input-group historyFilterInput" id="tempQuerySecondDiv">
+                <span class="input-group-addon historyFilterInputHint">秒</span>
+                <input id="tempQuerySecond" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,2)" class="form-control"  min="0" max="59" maxlength="2">
+            </div>
+        </div>
+        <div class="row clearfix selectionDiv selectionAdvanced"  v-if='isShowAdvcanced'>
+            <div class="input-group historyFilterInput" id="tempQueryAirTempDiv">
+                <span class="input-group-addon historyFilterInputHint">空气温度</span>
+                <input id="tempQueryAirTemp" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,2)" class="form-control"  min="0" max="59" maxlength="2">
+            </div>
+            <div class="input-group historyFilterInput" id="tempQueryAirHumidityDiv">
+                <span class="input-group-addon historyFilterInputHint">空气湿度</span>
+                <input id="tempQueryAirHumidity" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,2)" class="form-control"  min="0" max="59" maxlength="2">
+            </div>
+            <div class="input-group historyFilterInput" id="tempQueryDirtTempDiv">
+                <span class="input-group-addon historyFilterInputHint">土壤温度</span>
+                <input id="tempQueryDirtTemp" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,2)" class="form-control"  min="0" max="59" maxlength="2">
+            </div>
+            <div class="input-group historyFilterInput" id="tempQueryDirtHumidityDiv">
+                <span class="input-group-addon historyFilterInputHint">土壤湿度</span>
+                <input id="tempQueryDirtHumidity" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,2)" class="form-control"  min="0" max="59" maxlength="2">
+            </div>
+        </div>
+        <div class="row clearfix selectionDiv selectionAdvanced"  v-if='isShowAdvcanced'>
+            <div class="input-group historyFilterInput" id="tempQueryLightDiv">
+                <span class="input-group-addon historyFilterInputHint">亮度</span>
+                <input id="tempQueryLight" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,2)" class="form-control"  min="0" max="59" maxlength="2">
+            </div>
+            <div class="input-group historyFilterInput" id="tempQueryPageCountDiv">
+                <span class="input-group-addon historyFilterInputHint">数据条数</span>
+                <input id="tempQueryPageCount" type="number" onkeyup="value=value.replace(/[^\w\.\/]/ig,'').substring(0,10)" class="form-control"  min="0" max="23" maxlength="10">
+            </div>
+        </div>
+        <hr>
+        <div class="historyPagesDiv">
+            <button class="btn btn-success" id="tempPrevPage" v-on:click="onPrevPage"><</button>
+            <span class="historyPagesText" id="tempPagesText">[[currentPage+1]] / [[totalPage]] </span>
+            <span style="margin-right: 10px;" >总共[[ resultCount ]]条结果</span>
+            <button class="btn btn-success" id="tempNextPage" v-on:click="onNextPage">></button>
+            <div class="historyPagesJumpDiv">
+                <input id="tempPages" type="number" class="form-control historyPagesInput" maxlength="4" placeholder="页" >
+                <button id="tempPagesJump" class="btn btn-success historyPagesJumpBtn" v-on:click="onPage">跳转</button>
+            </div>
+        </div>
+        <hr>
+        <div class="container topic_item_container" id="tempDataDiv" v-if="state == STATE_IDLE">
+            <div class="row clearfix ">
+                <div class="col-md-6 column" style="height: 400px;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>时间</th>
+                                <th>空气</th>
+                                <th>土壤</th>
+                                <th>亮度</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tempDataList" v-for="item in listData">
+                            <tr>
+                                <td>[[ item.time ]]</td>
+                                <td>[[ item.air ]]</td>
+                                <td>[[ item.dirt ]]</td>
+                                <td>[[ item.light ]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6 column" style="height: 100%;">
+                    <canvas class="line_chart" ref="lineChart" id="lineChart" width="400px" height="250px;"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="historyHintText" v-if="state != STATE_IDLE">
+            [[ msg ]]
+        </div>
+
+
+    </div>
+
+{% endblock toolbar_body %}
+
+{% block js_rescoures %}
+
+        const STATE_IDLE        = 0
+        const STATE_LOADING     = 1
+        const STATE_NO_DATA     = 2
+        const STATE_WAITING     = 3
+        const STATE_FAIL        = -1
+
+        const STATE_HINT_IDLE   = '获取数据成功'
+        const STATE_HINT_LOADING= '获取数据中'
+        const STATE_HINT_NO_DATA= '没有检索到数据'
+        const STATE_HINT_WAITING= '输入条件后点击检索以查询历史记录'
+        const STATE_HINT_FAIL   = '获取数据失败'
+
+        const SHOW_ADVANCED_TEXT_ACTIVE = '快速检索'
+        const SHOW_ADVANCED_TEXT        = '高级检索'
+
+        const URL_GET_HISTORY           = './../../api/history/'
+
+        const COLOR_BACKGROUND      = 'rgba(0,0,0,0)'
+        const COLOR_AIR_TEMP        = '#D69527'
+        const COLOR_AIR_HUMIDITY    = '#5FD8D0'
+        const COLOR_DIRT_TEMP       = '#FF3881'
+        const COLOR_DIRT_HUMIDITY   = '#8CD824'
+        const COLOR_LIGHT           = '#F0A5A5'
+
+        var vue = new Vue({
+            delimiters : ['[[',']]'],
+            el : '#app',
+            data : {
+                state           : STATE_WAITING,
+                msg             : STATE_HINT_WAITING,
+                hintMsg         : '',
+                isShowAdvcanced : false,
+                currentPage     : 0,
+                totalPage       : 0,
+                resultCount     : 0,
+                listData        : [],
+                //往下是记录图表的相关信息
+                chartData       : {
+                                    type: 'line',
+                                    data: {
+                                         labels : ["1","2","3","4","5","6","7"],
+                                         datasets : [
+                                             {
+                                                label : '空气温度',
+                                                backgroundColor: 'rgba(0, 0, 0, 0)',
+                                                borderColor    : 'rgba(90, 183, 93, 1)',
+                                                borderWidth: 1,
+                                                data : [65,59,90,81,56,55,40],
+                                             }
+                                         ]
+                                    }
+                                  }
+            },
+            methods : {
+                //下面是获取元素
+                getShowAdvancedText(){
+                    if(this.isShowAdvcanced){
+                        return SHOW_ADVANCED_TEXT_ACTIVE
+                    }else{
+                        return SHOW_ADVANCED_TEXT
+                    }
+                },
+                //下面是时间触发
+                onToggleShowAdvanced(){
+                    this.isShowAdvcanced = !this.isShowAdvcanced
+                },
+                onNextPage(){
+                    if(this.currentPage+1 >= this.totalPage){
+                        alert('当前已是最后一页')
+                        return
+                    }
+                    this.onGetData(this.currentPage + 1)
+                },
+                onPrevPage(){
+                    if(this.currentPage <= 0){
+                        alert('当前已是第一页')
+                        return
+                    }
+                    this.onGetData(this.currentPage - 1)
+                },
+                onPage(){
+                    Vue.nextTick(function(){
+                        var pageNum = $('#tempPages').val() - 1
+                        if (pageNum == null || pageNum == undefined) {
+                            pageNum = 0
+                        }
+                        if (pageNum == '') {
+                            pageNum = 0
+                        }
+                        if (isNaN(pageNum)) {
+                            pageNum = 0
+                        }
+                        if (pageNum < 0){
+                            pageNum = 0
+                        }
+                        vue.onGetData(pageNum)
+                    })
+                },
+                onGetData(pageNum){
+                    var jsonObj = getRequestJson(pageNum)
+                    var self = this
+                    self.state = STATE_LOADING
+                    self.msg = STATE_HINT_LOADING
+                    ajaxPost(
+                        URL_GET_HISTORY,
+                        jsonObj,
+                        function(data){
+                            self.state = STATE_IDLE
+                            self.msg = STATE_HINT_IDLE
+                            var json = JSON.parse(data)
+                            self.listData = []
+                            self.currentPage = json.startPage
+                            self.resultCount = json.length
+                            self.totalPage = json.pageMax
+                            var totalItems = json.length
+                            if(json.data.length <= 0){  //这里的是没有数据的
+                                self.state = STATE_NO_DATA
+                                self.msg = STATE_HINT_NO_DATA
+                                self.currentPage = 0
+                                self.totalPage = 0
+                                return
+                            }
+                            for(var num in json.data){
+                                var tempItem = json.data[num]
+                                var listItem = {}
+                                listItem['time'] = tempItem.year+'-'+tempItem.month+'-'+tempItem.day+' '+tempItem.hour+':'+tempItem.minute+':'+tempItem.second
+                                listItem['air'] = tempItem.air_temperature+'℃ / '+tempItem.air_humidity+'%'
+                                listItem['dirt']= tempItem.dirt_temperature+'℃ / '+tempItem.dirt_humidity+'%'
+                                listItem['light'] = tempItem.light
+                                self.listData.push(listItem)
+                            }
+                            //往下是生成图表的
+                            var chartData = {}
+                            var chartDataLabels = []
+                            var chartDataAirTemp = []
+                            var chartDataAirHumidity = []
+                            var chartDataDirtTemp = []
+                            var chartDataDirtHumidity = []
+                            var chartDataLight = []
+                            chartData['type'] = 'line'
+                            for(var num in json.data){
+                                var tempItem = json.data[num]
+                                chartDataLabels.push(tempItem.year+'-'+tempItem.month+'-'+tempItem.day+' '+tempItem.hour+':'+tempItem.minute+':'+tempItem.second) 
+                                chartDataAirTemp.push(tempItem.air_temperature)
+                                chartDataAirHumidity.push(tempItem.air_humidity)
+                                chartDataDirtTemp.push(tempItem.dirt_temperature)
+                                chartDataDirtHumidity.push(tempItem.dirt_humidity)
+                                chartDataLight.push(tempItem.light)
+                            }
+                            var chartDataAirTempJsonListItem = {
+                                label           : '空气温度',
+                                backgroundColor : COLOR_BACKGROUND,
+                                borderColor     : COLOR_AIR_TEMP,
+                                borderWidth     : 1,
+                                data            : chartDataAirTemp
+                            }
+                            var chartDataAirHumidityJsonListItem = {
+                                label           : '空气湿度',
+                                backgroundColor : COLOR_BACKGROUND,
+                                borderColor     : COLOR_AIR_HUMIDITY,
+                                borderWidth     : 1,
+                                data            : chartDataAirHumidity
+                            }
+                            var chartDataDirtTempJsonListItem = {
+                                label           : '土壤温度',
+                                backgroundColor : COLOR_BACKGROUND,
+                                borderColor     : COLOR_DIRT_TEMP,
+                                borderWidth     : 1,
+                                data            : chartDataDirtTemp
+                            }
+                            var chartDataDirtHumidityJsonListItem = {
+                                label           : '土壤湿度',
+                                backgroundColor : COLOR_BACKGROUND,
+                                borderColor     : COLOR_DIRT_HUMIDITY,
+                                borderWidth     : 1,
+                                data            : chartDataDirtHumidity
+                            }
+                            var chartDataLightJsonListItem = {
+                                label           : '土壤湿度',
+                                backgroundColor : COLOR_BACKGROUND,
+                                borderColor     : COLOR_LIGHT,
+                                borderWidth     : 1,
+                                data            : chartDataLight
+                            }
+                            var chartDataDataSets = []
+                            chartDataDataSets.push(chartDataAirTempJsonListItem)
+                            chartDataDataSets.push(chartDataAirHumidityJsonListItem)
+                            chartDataDataSets.push(chartDataDirtTempJsonListItem)
+                            chartDataDataSets.push(chartDataDirtHumidityJsonListItem)
+                            chartDataDataSets.push(chartDataLightJsonListItem)
+                            chartData['data'] = []
+                            chartData.data.labels = chartDataLabels
+                            chartData.data.datasets = chartDataDataSets
+                            Vue.nextTick(function(){
+                                new Chart(document.getElementById("lineChart").getContext("2d"),chartData )
+                            })
+                        },
+                        function(){
+                            self.state = STATE_FAIL
+                            self.msg = STATE_HINT_FAIL
+                        }
+                    )
+                },
+            },
+            mounted: function () {
+                
+            }
+
+        })
+
+        function setData(data){
+            new Chart(document.getElementById("lineChart").getContext("2d"),data );
+        }
+        
+
+
+    
+
+
+{% endblock js_rescoures %}

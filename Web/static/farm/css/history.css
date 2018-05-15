@@ -1,0 +1,50 @@
+.historyFilterInput{
+	float: left;
+	margin-left: 4px;
+	margin-right: 4px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.historyFilterInputHint{
+	width: 26px;
+}
+
+.historyPagesDiv{
+	vertical-align: center;
+}
+
+.historyPagesText{
+	font-size: 16px;
+	margin-left: 16px;
+	margin-right: 16px;
+}
+
+.historyPagesInput{
+	width: 82px;
+	display: inline-block;
+	float: left;
+}
+
+.historyPagesJumpDiv{
+	float: right;
+}
+
+.historyPagesJumpBtn{
+	margin-left: 16px;
+}
+
+.historyHintText{
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	background: #ddd;
+	text-align: center;
+	font-size: 26px;
+}
+
+.selectionDiv{
+	margin-top: 8px;
+	margin-bottom: 8px;
+}

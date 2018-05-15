@@ -373,7 +373,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F40_41xxx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\inc;..\HARDWARE;..\HARDWARE\AIR_TEMPERATURE_HUMIDITY;..\HARDWARE\BUZZER;..\HARDWARE\CUSTOM_DEVICES;..\HARDWARE\DIRT_HUMIDITY;..\HARDWARE\DIRT_TEMPERATURE;..\HARDWARE\FAN;..\HARDWARE\FLASH;..\HARDWARE\LED;..\HARDWARE\LIGHT;..\HARDWARE\UART;..\HARDWARE\WATERING;..\HARDWARE\TIM;..\HARDWARE\SPI;..\HARDWARE\AD;..\HARDWARE\DHT11;..\HARDWARE\DS18B20;..\HARDWARE\NETWORK;..\HARDWARE\NETWORK\W5500</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\inc;..\HARDWARE;..\HARDWARE\AIR_TEMPERATURE_HUMIDITY;..\HARDWARE\BUZZER;..\HARDWARE\CUSTOM_DEVICES;..\HARDWARE\DIRT_HUMIDITY;..\HARDWARE\DIRT_TEMPERATURE;..\HARDWARE\FAN;..\HARDWARE\FLASH;..\HARDWARE\LED;..\HARDWARE\LIGHT;..\HARDWARE\UART;..\HARDWARE\WATERING;..\HARDWARE\TIM;..\HARDWARE\SPI;..\HARDWARE\AD;..\HARDWARE\DHT11;..\HARDWARE\DS18B20;..\HARDWARE\NETWORK;..\HARDWARE\NETWORK\W5500;..\HARDWARE\MOTOR;..\HARDWARE\DEVICE;..\HARDWARE\WARM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -795,9 +795,19 @@
               <FilePath>..\HARDWARE\DS18B20\DS18B20.c</FilePath>
             </File>
             <File>
-              <FileName>NETWORK.c</FileName>
+              <FileName>MOTOR.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\NETWORK\NETWORK.c</FilePath>
+              <FilePath>..\HARDWARE\MOTOR\MOTOR.c</FilePath>
+            </File>
+            <File>
+              <FileName>DEVICE.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\DEVICE\DEVICE.c</FilePath>
+            </File>
+            <File>
+              <FileName>WARM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\WARM\WARM.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,0 +1,21 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+{% block title %}登出{% endblock title %}
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'farm/css/logout.css' %}" type="text/css" />
+    
+    <script src="{% static 'common/js/ajax_request.js' %}"></script>
+    <script src="{% static 'farm/js/logout.js' %}"></script>
+{% endblock css_js_reference %}
+
+{% block toolbar_body %}
+
+	<img src="{% static 'common/img/img_exit.png' %}" width="128px"  class="center-block logout_top_img">
+	<br>
+	<h3 class="logout_center_text">您确认要登出吗</h3>
+	<br>
+	<button type="button" onclick="logout()" class="btn btn-success center-block logout_logout_button" >登出</button>
+
+{% endblock toolbar_body %}

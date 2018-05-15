@@ -1,0 +1,26 @@
+#fadein_style{
+  transition-property:all;
+  transition-duration:1500ms;
+  transition-timing-default;
+}
+
+#fadein_style.start{
+  left: 120px;
+  opacity:1;
+}
+
+#fadein_style.end{
+  left: 800px;
+  opacity:.3;
+}
+
+.navBarTabAnime{
+    -webkit-transform: translate(0px,0px);
+    transform: translate(0px,0px);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+.navBarTabAnime:hover{
+    -webkit-transform: translate(0px,0px);
+    transform: translate(0px,-5px);
+}

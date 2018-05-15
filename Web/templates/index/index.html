@@ -1,0 +1,57 @@
+{% extends 'base/base_background.html' %}
+{% load staticfiles %}
+
+{% block title %}CreeperSan的蔬菜大棚{% endblock title %}
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'common/css/dialog.css' %}" type="text/css" />
+    <script src="{% static 'common/js/dialog.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'index/css/index.css' %}" type="text/css" />
+    <script src="{% static 'index/js/index.js' %}"></script>
+    <script src="{% static 'common/js/anime.js' %}"></script>
+{% endblock css_js_reference %}
+
+
+{% block body %}
+    <!-- 提示对话框 -->
+    <div id="dialog_background" class="dialog_background">
+        <div id="dialog_self" class="dialog_self" >
+            <a id="dialog_close" class="dialog_close" href="javascript:void(0)" onclick="hideDialog()"><img src="{% static 'common/icon/ic_close_36px.svg' %}"></a>
+            <h2 id="dialog_title" class="dialog_content" ></h2>
+            <hr>
+            <p id="dialog_content" class="dialog_content"></p>
+        </div>
+    </div>
+    <!-- 内容 -->
+    <div class="container" id="login_content" style="text-align:center;z-index:0;position:relative;max-width:1280px;margin:0 auto;">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <!-- 标签卡 -->
+                <div id="login_tag" style="color: #fff;width: 500px;align:center;margin-left: auto;margin-right: auto;">
+                    <img src="{% static 'index/img/logo.png' %}">
+                    <img style="width: 300px;margin-top: -20px;" src="{% static 'index/img/logo_description.png' %}">
+                    <form method="post" onsubmit="return submitLogin();" style="background-color: #fff;padding: 26px;border-radius: 10px;opacity: 0.9;">
+                        {% csrf_token %}
+                        <h1 style="color: #000;">用户登录</h1>
+                        <p id="login_hint_text" style="{% if isLoginRequest %}color: #f00{% else %}color: #000;{% endif %};margin-top: 26px;margin-bottom: 26px;">{% if isLoginRequest %}{% if isSuccess %}登陆成功，正在跳转{% else %}用户名或密码有误{% endif %}{% else %}登录以进行操作{% endif %}</p>
+                        <div id="login_block_username" class="input-group input-group-lg login_input_div">
+                            <span class="input-group-addon"><img src="{% static 'common/icon/ic_person_24px.svg' %}"></span>
+                            <input id="login_input_account" type="text" name="username" class="form-control" placeholder="请输入账号" style="height: 100%;">
+                        </div>
+                        <div id="login_block_password" class="input-group input-group-lg login_input_div" style="margin-top: 16px;">
+                            <span class="input-group-addon"><img src="{% static 'common/icon/ic_lock_24px.svg' %}"></span>
+                            <input id="login_input_password" type="password" name="password" class="form-control" placeholder="请输入密码" style="height: 100%;">
+                        </div>
+                        <img class="login_diver" src="{% static 'common/img/diver_gray.png' %}">>
+                        <button id="login_button_submit" type="submit" class="btn btn-primary login_button" style="margin-top: -6px;">登 录</button>
+                        <a href="mailto:admin@creepersan.com"><button type="button" class="btn btn-default login_button" style="margin-top: 12px;">申请账号</button></a>
+                        <span id="text_forget_password" class="login_forget_password"><a href="javascript:void(0)">忘记密码？</a></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block js_rescoures %}
+{% endblock js_rescoures %}

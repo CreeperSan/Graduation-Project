@@ -7,23 +7,33 @@ void TIM_Twinkle_Init(void)
 	
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);//Ê¹ÄÜTIM3Ê±ÖÓ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);//Ê¹ÅœTIM3Ê±×“
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);//æµ‹è¯•å®šæ—¶å™¨2
 	
 	tim_structure.TIM_Period = 5000-1;	//×Ô¶¯ÖØ×°ÔØÖµ
 	tim_structure.TIM_Prescaler = 8400-1;	//¶¨Ê±Æ÷·ÖÆµ
 	tim_structure.TIM_CounterMode = TIM_CounterMode_Up;//ÏòÉÏ¼ÆÊıÄ£Ê½
 	tim_structure.TIM_ClockDivision = TIM_CKD_DIV1;
 	
-	TIM_TimeBaseInit(TIM3,&tim_structure);//³õÊ¼»¯TIM3
+	TIM_TimeBaseInit(TIM3,&tim_structure);//ÔµÊ¼Û¯TIM3
+	TIM_TimeBaseInit(TIM2,&tim_structure);//æµ‹è¯•å®šæ—¶å™¨2
 	
-	TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);//ÔÊĞí¶¨Ê±Æ÷3¸üĞÂÖĞ¶Ï
-	TIM_Cmd(TIM3,ENABLE); //Ê¹ÄÜ¶¨Ê±Æ÷3
+	TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);//ÕŠÑ­Ö¨Ê±Ç·3Ù¼Ñ‚××
+	TIM_Cmd(TIM3,ENABLE); //Ê¹ÅœÖ¨Ê±Ç·3
+	TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE);//æµ‹è¯•å®šæ—¶å™¨2
+	TIM_Cmd(TIM2,ENABLE); //æµ‹è¯•å®šæ—¶å™¨2
 	
 	nvic_structure.NVIC_IRQChannel = TIM3_IRQn;
 	nvic_structure.NVIC_IRQChannelCmd = ENABLE;
 	nvic_structure.NVIC_IRQChannelSubPriority = 0x03;//×ÓÓÅÏÈ¼¶3
 	nvic_structure.NVIC_IRQChannelPreemptionPriority = 0x01;//ÇÀÕ¼ÓÅÏÈ¼¶1
 	NVIC_Init(&nvic_structure);
+	
+	nvic_structure.NVIC_IRQChannel = TIM2_IRQn;//æµ‹è¯•å®šæ—¶å™¨2
+	nvic_structure.NVIC_IRQChannelCmd = ENABLE;//æµ‹è¯•å®šæ—¶å™¨2
+	nvic_structure.NVIC_IRQChannelSubPriority = 0x03;//æµ‹è¯•å®šæ—¶å™¨2
+	nvic_structure.NVIC_IRQChannelPreemptionPriority = 0x01;//æµ‹è¯•å®šæ—¶å™¨2
+	NVIC_Init(&nvic_structure);//æµ‹è¯•å®šæ—¶å™¨2
 	
 }
 

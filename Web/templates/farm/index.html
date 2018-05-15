@@ -1,0 +1,77 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/index.css' %}" type="text/css" />
+    <script src="{% static 'farm/js/index.js' %}"></script>
+{% endblock css_js_reference %}
+
+{% block title %}首页{% endblock title %}
+
+{% block toolbar_body %}
+    
+    <img class="topic_icon" src="{% static 'common/icon/ic_dashboard.png' %}">
+    <a href="./"><p style="float: right;margin-top: 22px;" >刷新</p></a>
+    <h3 class="topic_title" style="margin-top: 16px;">大棚概况</h3>
+    <hr>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-4 column block_state">
+                <img src="{% static 'common/icon/ic_temperature.png' %}" class="block_state_img">
+                <p><span class="block_state_title">{{ temperature_air }}℃</span></p>
+                <p>{{ temperature_air_text }}</p>
+            </div>
+            <div class="col-md-4 column block_state">
+                <img src="{% static 'common/icon/ic_humidity.png' %}" class="block_state_img">
+                <p><span class="block_state_title">{{ humidity_air }}%</span></p>
+                <p>{{ humidity_air_text }}</p>
+            </div>
+            <div class="col-md-4 column block_state">
+                <img src="{% static 'common/icon/ic_sun.png' %}" class="block_state_img">
+                <p><span class="block_state_title">{{ light }}</span></p>
+                <p>{{ light_text }}</p>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-4 column block_state">
+                <img src="{% static 'common/icon/ic_dirt_temperature.png' %}" class="block_state_img">
+                <p><span class="block_state_title">{{ temperature_dirt }}℃</span></p>
+                <p>{{ temperature_dirt_text }}</p>
+            </div>
+            <div class="col-md-4 column block_state">
+                <img src="{% static 'common/icon/ic_dirt_humidity.png' %}" class="block_state_img">
+                <p><span class="block_state_title">{{ humidity_dirt }}%</span></p>
+                <p>{{ humidity_dirt_text }}</p>
+            </div>
+            <div class="col-md-4 column block_state">
+                <img src="{% static 'common/icon/ic_device.png' %}" class="block_state_img">
+                <p><span class="block_state_title">{{ device_title }}</span></p>
+                <p>{{ device_subtitle }}</p>
+            </div>
+        </div>
+    </div>
+
+<!--     <img class="topic_icon" src="{% static 'common/icon/ic_table.png' %}">
+    <h3 class="topic_title">运行情况</h3>
+    <hr>
+    <p class="topic_content">目前运行良好，未发现任何异常</p> -->
+
+<!--     <img class="topic_icon" src="{% static 'common/icon/ic_history.png' %}">
+    <h3 class="topic_title">最近操作</h3>
+    <hr>
+    <p class="topic_content">无最近操作记录</p> -->
+
+<!--     <img class="topic_icon" src="{% static 'common/icon/ic_alarm.png' %}">
+    <h3 class="topic_title">警报信息</h3>
+    <hr>
+    <p class="topic_content">当前无警报，一切运行正常</p> -->
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_history.png' %}">
+    <h3 class="topic_title">其他信息</h3>
+    <hr>
+    <p class="topic_content" >温度上下限 : {{ tempLower }} ~ {{ tempUpper }} ℃</p>
+    <p class="topic_content" >空气湿度上下限 : {{ humidityAirLower }} ~ {{ humidityAirUpper }} %</p>
+    <p class="topic_content" >土壤湿度上下限 : {{ humidityDirtLower }} ~ {{ humidityDirtUpper }} %</p>
+
+{% endblock toolbar_body %}

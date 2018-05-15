@@ -1,0 +1,422 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic_item.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'lib/bootstrap-switch/bootstrap-switch.css' %}" type="text/css" />
+    <script src="{% static 'lib/bootstrap-switch/bootstrap-switch.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lib/bootstrap-slider/bootstrap-slider.css' %}" type="text/css" />
+    <script src="{% static 'lib/bootstrap-slider/bootstrap-slider.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'common/css/dialog.css' %}" type="text/css" />
+    <script src="{% static 'common/js/dialog.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'farm/css/setting.css' %}" type="text/css" />
+    <script src="{% static 'farm/js/setting.js' %}"></script>
+    <script src="{% static 'common/js/ajax_request.js' %}"></script>
+    <script src="{% static 'common/js/anime.js' %}"></script>
+{% endblock css_js_reference %}
+
+{% block title %}设置{% endblock title %}
+
+{% block toolbar_dialog %}
+    <div id="dialog_background" class="dialog_background" style="display: none;">
+        <div id="dialog_self" class="dialog_self">
+            <a id="dialog_close" class="dialog_close" href="javascript:void(0)" onclick="hideDialog()"><img src="{% static 'common/icon/ic_close_36px.svg' %}"></a>
+            <p id="dialog_title" class="dialog_title" >title</p>
+            <hr>
+            <div style="padding-left: 32px;padding-right: 32px;">
+                <!-- 提示文本 -->
+                <p id="dialog_content_hint_p">提示文本</p>
+                <!-- 修改输入框 -->
+                <div id="dialog_content_seekbar_div">
+                    <p id="dialog_content_seekbar_hint" class="text-center" >提示文本</p>
+                    <input style="width: 100%;padding-left: 5%;padding-right: 5%;" type="text"  data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide" data-slider-id='ex1Slider' id="ex1"  data-slider-handle="round" />
+                </div>
+                <!-- 周期选择 -->
+                <div id="dialog_content_cycle_pick" class="row clearfix" style="padding-left: 1%;padding-right: 1%;">
+                    <select id="dialog_content_cycle_select" style="padding: 12px 8px 12px 8px;height: 48px;max-width: 160px;margin: 4px;" onchange="onRepeatCircleItemSelected(this)" class="form-control">
+                        <option value="target_none" selected>请选择重复周期</option>
+                        <option value="target_week">按星期重复</option>
+                        <option value="target_day">按天数重复</option>
+                        <option value="target_hour">按小时重复</option>
+                        <option value="target_minute">按分钟重复</option>
+                    </select>
+                   <div id="dialog_content_weekday" class="btn-group btn-group-lg" style="margin-left: 16px;display: none;">
+                       <button id="dialog_weekday_sun" type="button" onclick="onWeekdaysClick(this)" class="btn btn-default">周日</button>
+                       <button id="dialog_weekday_mon" type="button" onclick="onWeekdaysClick(this)" class="btn btn-default">周一</button>
+                       <button id="dialog_weekday_tue" type="button" onclick="onWeekdaysClick(this)" class="btn btn-default">周二</button>
+                       <button id="dialog_weekday_wen" type="button" onclick="onWeekdaysClick(this)" class="btn btn-default">周三</button>
+                       <button id="dialog_weekday_thus" type="button" onclick="onWeekdaysClick(this)" class="btn btn-default">周四</button>
+                       <button id="dialog_weekday_fri" type="button" onclick="onWeekdaysClick(this)" class="btn btn-default">周五</button>
+                       <button id="dialog_weekday_sat" type="button" onclick="onWeekdaysClick(this)" class="btn btn-default">周六</button>
+                   </div>
+                   <input id="dialog_content_repeat_cycle" type="number" placeholder="请输入单位重复周期数" class="form-control" style="padding: 20px 8px 24px 8px;display: none;max-width: 200px;" type="text" name="dayRepeat">
+                   <input id="dialog_content_hour" type="number" placeholder="小时 ( 24 )" class="form-control" style="padding: 20px 8px 24px 8px;display: none;max-width: 100px;" name="dayRepeat">
+                   <input id="dialog_content_minute" type="number" placeholder="分钟 ( 60 )" class="form-control" style="padding: 20px 8px 24px 8px;display: none;max-width: 100px;" name="dayRepeat">
+                    
+                </div>
+                <!-- 执行动作选择 -->
+                <div id="dialog_content_action_pick_div">
+                    <select id="dialog_content_target_select" style="padding: 12px 8px 12px 8px;height: 48px;max-width: 160px;display: inline;margin: 4px;" class="form-control" onchange="onTypeItemSelected(this)">
+                        <option value="target_none" selected>请选择对象</option>
+                        <option value="target_temp_auto">温度自动控制</option>
+                        <option value="target_humidity_auto">空气湿度自动控制</option>
+                        <option value="target_dirt_humdity_auto">土壤湿度自动控制</option>
+                        <option value="target_fertilization_auto">自动施肥</option>
+                        <option value="target_water_auto">自动浇水</option>
+                        <option value="target_fertilization">施肥</option>
+                        <option value="target_water">浇水</option>
+                        <option value="target_fan">风扇</option>
+                        <option value="target_heat">电热膜</option>
+                        <option value="target_device1">自定义设备 1</option>
+                        <option value="target_device2">自定义设备 2</option>
+                        <option value="target_device3">自定义设备 3</option>
+                        <option value="target_device4">自定义设备 4</option>
+                        <option value="target_light">环境光开关</option>
+                        <option value="target_light_color">环境光颜色</option>
+                        <option value="target_light_level">环境光亮度</option>
+                    </select>
+                    <select id="dialog_content_value_select" style="padding: 12px 8px 12px 8px;height: 48px;max-width: 126px;display: inline;margin: 4px;" class="form-control" onchange="onValueItemSelected(this)" >
+                        <option class="value_none_target" value="value_none_target" selected>请先选择对象</option>
+                        <option class="value_none" style="display: none;"  value="value_none">请选择操作</option>
+                        <option class="value_state" style="display: none;" value="value_on">打开</option>
+                        <option class="value_state" style="display: none;" value="value_off">关闭</option>
+                        <option class="value_color" style="display: none;" value="value_red">红色</option>
+                        <option class="value_color" style="display: none;" value="value_green">绿色</option>
+                        <option class="value_color" style="display: none;" value="value_blue">蓝色</option>
+                        <option class="value_color" style="display: none;" value="value_yellow">黄色</option>
+                        <option class="value_color" style="display: none;" value="value_purple">紫色</option>
+                        <option class="value_color" style="display: none;" value="value_cyan">青色</option>
+                        <option class="value_color" style="display: none;" value="value_white">白色</option>
+                        <option class="value_percent" style="display: none;" value="value_0">0%</option>
+                        <option class="value_percent" style="display: none;" value="value_10">10%</option>
+                        <option class="value_percent" style="display: none;" value="value_20">20%</option>
+                        <option class="value_percent" style="display: none;" value="value_30">30%</option>
+                        <option class="value_percent" style="display: none;" value="value_40">40%</option>
+                        <option class="value_percent" style="display: none;" value="value_50">50%</option>
+                        <option class="value_percent" style="display: none;" value="value_60">60%</option>
+                        <option class="value_percent" style="display: none;" value="value_70">70%</option>
+                        <option class="value_percent" style="display: none;" value="value_80">80%</option>
+                        <option class="value_percent" style="display: none;" value="value_90">90%</option>
+                        <option class="value_percent" style="display: none;" value="value_100">100%</option>
+                    </select>
+                    <button id="dialog_content_action_add_btn" onclick="onActionAddClick()" style="padding: 13px 26px 13px 26px;margin: 4px;" type="button" class="btn btn-success">添加</button>
+                    <p id="dialog_content_action_pick_hint" style="display: inline;color: red;">已经达到5条上限</p>
+                    <div style="margin-top: 16px;">
+                        <ul class="list-group" id="dialog_list_group">
+                            <li id="dialog_list_item0" class="list-group-item"><span id="dialog_list_text0"></span><a onclick="actionItem1Delete()" class="list_group_delete">删除</a></li>
+                            <li id="dialog_list_item1" class="list-group-item"><span id="dialog_list_text1"></span><a onclick="actionItem2Delete()" class="list_group_delete">删除</a></li>
+                            <li id="dialog_list_item2" class="list-group-item"><span id="dialog_list_text2"></span><a onclick="actionItem3Delete()" class="list_group_delete">删除</a></li>
+                            <li id="dialog_list_item3" class="list-group-item"><span id="dialog_list_text3"></span><a onclick="actionItem4Delete()" class="list_group_delete">删除</a></li>
+                            <li id="dialog_list_item4" class="list-group-item"><span id="dialog_list_text4"></span><a onclick="actionItem5Delete()" class="list_group_delete">删除</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 确定 取消按钮 -->
+                <hr id="dialog_content_button_hr">
+                <div id="dialog_content_button" style="text-align:right;margin-right: 32px;">
+                    <button onclick="onConfirm()" id="dialog_content_confirm" style="padding: 16px 26px 16px 26px;font-size: 16px;border: 0px;background-color: rgba(0,0,0,0);color: rgb(90,183,93);">确定</button>
+                    <button onclick="onCancel()" style="padding: 16px 26px 16px 26px;font-size: 16px;border: 0px;background-color: rgba(0,0,0,0);">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock toolbar_dialog %}
+
+{% block toolbar_body %}
+    <img class="topic_icon" src="{% static 'common/icon/ic_temperature.png' %}">
+    <h3 class="topic_title_first">温度设置</h3>
+    <hr>
+    <div class="container topic_item_container">
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">温度自动控制</p>
+                <p class="topic_item_cell_hint_text">打开此选项即可自动控制温度</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <input id="auto_temp" class="pull-right switch" type="checkbox" name="my-checkbox" {% if temperature_state == '1' %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">温度上限</p>
+                <p class="topic_item_cell_hint_text">设置大棚温度的上限</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button id="dialog_content_temp_upper_limit_btn" class="btn btn-default" style="width: 78px" onclick="showAsTempUpper()">{{ temperature_upper_limit }}℃</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">温度下限</p>
+                <p class="topic_item_cell_hint_text">设置大棚温度的下限</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button id="dialog_content_temp_lower_limit_btn" class="btn btn-default" style="width: 78px" onclick="showAsTempLower()">{{ temperature_lower_limit }}℃</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">温度上限执行动作</p>
+                <p class="topic_item_cell_hint_text">设置温度高于上限时执行的动作</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button class="btn btn-default" style="width: 78px" onclick="showAsTempUpperAction()">选择事件</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">温度下限执行动作</p>
+                <p class="topic_item_cell_hint_text">设置温度低于下限时执行的动作</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button class="btn btn-default" style="width: 78px" onclick="showAsTempLowerAction()">选择事件</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_humidity.png' %}">
+    <h3 class="topic_title">空气湿度设置</h3>
+    <hr>
+    <div class="container topic_item_container">
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">空气湿度自动控制</p>
+                <p class="topic_item_cell_hint_text">打开此选项即可自动控制空气湿度</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <input id="auto_humidity" class="pull-right switch" type="checkbox" name="my-checkbox" {% if himidity_state == '1' %}checked{% endif %} >
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">空气湿度上限</p>
+                <p class="topic_item_cell_hint_text">设置大棚空气湿度的上限</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button id="dialog_content_humidity_upper_limit_btn" class="btn btn-default" style="width: 78px" onclick="showAsHumidityUpper()">{{ himidity_upper_limit }}%</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">空气湿度下限</p>
+                <p class="topic_item_cell_hint_text">设置大棚空气湿度的下限</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button id="dialog_content_humidity_lower_limit_btn" class="btn btn-default" style="width: 78px" onclick="showAsHumidityLower()">{{ himidity_lower_limit }}%</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">空气湿度上限执行动作</p>
+                <p class="topic_item_cell_hint_text">设置空气湿度高于上限时执行的动作</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button class="btn btn-default" style="width: 78px" onclick="showAsHumidityUpperAction()">选择事件</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">空气湿度下限执行动作</p>
+                <p class="topic_item_cell_hint_text">设置空气湿度高于上限时执行的动作</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button class="btn btn-default" style="width: 78px" onclick="showAsHumidityLowerAction()">选择事件</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_dirt_humidity.png' %}">
+    <h3 class="topic_title">土壤湿度设置</h3>
+    <hr>
+    <div class="container topic_item_container">
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">土壤湿度自动控制</p>
+                <p class="topic_item_cell_hint_text">打开此选项即可自动控制土壤湿度</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <input id="id_dirt_humidity" class="pull-right switch" type="checkbox" name="my-checkbox" {% if dirt_himidity_state == '1' %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">土壤湿度上限</p>
+                <p class="topic_item_cell_hint_text">设置大棚土壤湿度的上限</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button id="dialog_content_dirt_humidity_upper_limit_btn" class="btn btn-default" style="width: 78px" onclick="showAsDirtHumidityUpper()">{{ dirt_himidity_upper_limit }}%</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">土壤湿度下限</p>
+                <p class="topic_item_cell_hint_text">设置大棚土壤湿度的下限</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button id="dialog_content_dirt_humidity_lower_limit_btn" class="btn btn-default" style="width: 78px" onclick="showAsDirtHumidityLower()">{{ dirt_himidity_lower_limit }}%</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">土壤湿度上限执行动作</p>
+                <p class="topic_item_cell_hint_text">设置土壤湿度高于上限时执行的动作</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button class="btn btn-default" style="width: 78px" onclick="showAsDirtHumidityUpperAction()">选择事件</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">土壤湿度下限执行动作</p>
+                <p class="topic_item_cell_hint_text">设置土壤湿度高于上限时执行的动作</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button class="btn btn-default" style="width: 78px" onclick="showAsDirtHumidityLowerAction()">选择事件</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+    <img class="topic_icon invisible" src="{% static 'common/icon/ic_fertilization.png' %}">
+    <h3 class="topic_title invisible">自动施肥设置</h3>
+    <hr class="invisible">
+    <div class="container topic_item_container invisible" >
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">自动施肥开关</p>
+                <p class="topic_item_cell_hint_text">打开此选项即可打开自动施肥</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <input id="auto_fertilization_state" class="pull-right switch" type="checkbox" name="my-checkbox" {% if fertilization_state == '1' %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">自动施肥周期</p>
+                <p id="topic_fertilization_hint_txt" class="topic_item_cell_hint_text">{{ fertilization_hint_text }}</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button class="btn btn-default" style="width: 78px" onclick="showAsAutoFertilizationDialog()">选择周期</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+    <img class="topic_icon invisible" src="{% static 'common/icon/ic_watering.png' %}">
+    <h3 class="topic_title invisible">自动浇水设置</h3>
+    <hr class="invisible">
+    <div class="container topic_item_container invisible" >
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">自动浇水开关</p>
+                <p class="topic_item_cell_hint_text">打开此选项即可打开自动浇水</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <input id="auto_water_state" class="pull-right switch" type="checkbox" name="my-checkbox" {% if watering_state == '1' %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">自动浇水周期</p>
+                <p id="topic_water_hint_txt" class="topic_item_cell_hint_text">{{ watering_hint_text }}</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button class="btn btn-default" style="width: 78px" onclick="showAsAutoWaterDialog()">选择周期</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+
+
+        
+{% endblock toolbar_body %}
+
+
+{% block js_rescoures %}
+    var temperature_upper = {{ temperature_upper_limit }};
+    var temperature_lower = {{ temperature_lower_limit }};
+    var humidity_upper = {{ himidity_upper_limit }};
+    var humidity_lower = {{ himidity_lower_limit }};
+    var dirt_humidity_upper = {{ dirt_himidity_upper_limit }};
+    var dirt_humidity_lower = {{ dirt_himidity_lower_limit }};
+    var temperature_upper_action = {{ temperature_upper_actions|safe }};
+    var temperature_lower_action = {{ temperature_lower_actions|safe }};
+    var humidity_upper_action = {{ himidity_upper_actions|safe }};
+    var humidity_lower_action = {{ himidity_lower_actions|safe }};
+    var dirt_humidity_upper_action = {{ dirt_himidity_upper_actions|safe }};
+    var dirt_humidity_lower_action = {{ dirt_himidity_lower_actions|safe }};
+    var fertilization_cycle = {
+        'hour' : {{ fertilization_hour }},
+        'minute' : {{ fertilization_minute }},
+        'repeat_type' : {{ fertilization_repeat_type }},
+        'repeat_circle' : '{{ fertilization_repeat_circle }}'
+    };
+    var water_cycle = {
+        'hour' : {{ watering_hour }},
+        'minute' : {{ watering_minute }},
+        'repeat_type' : {{ watering_repeat_type }},
+        'repeat_circle' : '{{ watering_repeat_circle }}'
+    };
+    
+{% endblock js_rescoures %}

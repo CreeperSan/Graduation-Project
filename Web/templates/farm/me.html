@@ -1,0 +1,25 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+{% block title %}我{% endblock title %}
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'farm/css/me.css' %}" type="text/css" />
+{% endblock css_js_reference %}
+
+{% block toolbar_body %}
+
+    <div class="container text-center">
+        
+        <img class="me_head_img" src="{{ level_img_str }}">
+        <p class="me_username_p">{{ level_str }}</p> 
+        <p class="me_info_p">昵称 :{{ nickname }}</p>
+        <p class="me_info_p">用户名 :{{ username }}</p>
+        <p class="me_info_p">是否员工 ：{{ is_staff }}</p>
+        <p class="me_info_p">是否停用 ：{{ is_available }}</p>
+        <p class="me_info_p">注册时间 : {{ register_time }}</p>
+        <hr>
+        <p class="me_info_p">{{ info }}</p>
+    </div>
+
+{% endblock toolbar_body %}

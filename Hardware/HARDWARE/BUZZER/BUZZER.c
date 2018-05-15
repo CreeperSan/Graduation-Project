@@ -20,7 +20,7 @@ void BUZZER_Init(void)
 	*/
 void BUZZER_On(void)
 {
-	GPIO_SetBits(BUZZER_PORT,BUZZER_PIN);
+	GPIO_ResetBits(BUZZER_PORT,BUZZER_PIN);
 }
 
 /**
@@ -28,6 +28,6 @@ void BUZZER_On(void)
 	*/
 void BUZZER_Off(void)
 {
-	GPIO_ResetBits(BUZZER_PORT,BUZZER_PIN);
+	GPIO_SetBits(BUZZER_PORT,BUZZER_PIN);
 }
 

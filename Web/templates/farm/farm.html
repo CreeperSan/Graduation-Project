@@ -1,0 +1,170 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic_item.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'lib/bootstrap-switch/bootstrap-switch.css' %}" type="text/css" />
+    <script src="{% static 'lib/bootstrap-switch/bootstrap-switch.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lib/bootstrap-slider/bootstrap-slider.css' %}" type="text/css" />
+    <script src="{% static 'lib/bootstrap-slider/bootstrap-slider.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'common/css/dialog.css' %}" type="text/css" />
+    <script src="{% static 'common/js/dialog.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'farm/css/farm.css' %}" type="text/css" />
+    <script src="{% static 'farm/js/farm.js' %}"></script>
+    <script src="{% static 'common/js/ajax_request.js' %}"></script>
+
+{% endblock css_js_reference %}
+
+
+{% block title %}我的大棚{% endblock title %}
+
+{% block toolbar_dialog %}
+
+    <div id="dialog_background" class="dialog_background" style="display: none;">
+        <div id="dialog_self" class="dialog_self">
+            <a id="dialog_close" class="dialog_close" href="javascript:void(0)" onclick="hideDialog()"><img src="{% static 'common/icon/ic_close_36px.svg' %}"></a>
+            <p id="dialog_title" class="dialog_title" >title</p>
+            <hr>
+            <div style="padding-left: 32px;padding-right: 32px;">
+                <p id="dialog_content_hint_p" style="font-size: 16px;">提示文本</p>
+                <!-- 设置亮度 -->
+                <div id="dialog_content_light_level_div" style="width: 100%;padding-left: 5%;padding-right: 5%;">
+                    <p id="dialog_content_light_level_hint" style="text-align: center;">当前亮度：100</p>
+                    <input style="width: 100%;padding-left: 5%;padding-right: 5%;" type="text"  data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide" data-slider-id='ex1Slider' id="ex1"  data-slider-handle="round" />
+                </div>
+                <!-- 设置颜色 -->
+                <div id="dialog_content_color_pick_div">
+                    <div class="row clearfix" style="border: 10px;background-color: #eee;">
+                        <div id="color_piack_red" class="col-xs-2 column color_picker_div" style="background-color: #ff0000;"></div>
+                        <div id="color_piack_green" class="col-xs-2 column color_picker_div" style="background-color: #00ff00;"></div>
+                        <div id="color_piack_blue" class="col-xs-2 column color_picker_div" style="background-color: #0000ff;"></div>
+                        <div id="color_piack_yellow" class="col-xs-2 column color_picker_div" style="background-color: #ffff00;"></div>
+                        <div id="color_piack_purple" class="col-xs-2 column color_picker_div" style="background-color: #ff00ff;"></div>
+                        <div id="color_piack_cyan" class="col-xs-2 column color_picker_div" style="background-color: #00ffff;"></div>
+                        <div id="color_piack_white" class="col-xs-2 column color_picker_div" style="background-color: #ffffff;"></div>
+                    </div>
+                </div>
+                <!-- 确定 取消按钮 -->
+                <hr id="dialog_content_button_hr">
+                <div id="dialog_content_button" style="text-align:right;margin-right: 32px;">
+                    <button id="dialog_confirm_button" style="padding: 16px 26px 16px 26px;font-size: 16px;border: 0px;background-color: rgba(0,0,0,0);color: rgb(90,183,93);" onclick="onConfirm()">确定</button>
+                    <button style="padding: 16px 26px 16px 26px;font-size: 16px;border: 0px;background-color: rgba(0,0,0,0);" onclick="onCancel()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock toolbar_dialog %}
+
+{% block toolbar_body %}
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_device.png' %}">
+    <h3 class="topic_title_first">自定义设备控制</h3>
+    <hr>
+    <div class="container topic_item_container" >
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">自定义设备1开关</p>
+                <p class="topic_item_cell_hint_text">控制自定义设备1的开关</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <input id="switch_device1_state" class="pull-right switch" type="checkbox" name="my-checkbox" {% if device1_state == '1' %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">自定义设备2开关</p>
+                <p class="topic_item_cell_hint_text">控制自定义设备2的开关</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <input id="switch_device2_state" class="pull-right switch" type="checkbox" name="my-checkbox" {% if device2_state == '1' %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">自定义设备3开关</p>
+                <p class="topic_item_cell_hint_text">控制自定义设备3的开关</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <input id="switch_device3_state" class="pull-right switch" type="checkbox" name="my-checkbox" {% if device3_state == '1' %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">自定义设备4开关</p>
+                <p class="topic_item_cell_hint_text">控制自定义设备4的开关</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <input id="switch_device4_state" class="pull-right switch" type="checkbox" name="my-checkbox" {% if device4_state == '1' %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+    <img class="topic_icon" src="{% static 'common/icon/ic_sun.png' %}">
+    <h3 class="topic_title">环境光控制</h3>
+    <hr>
+    <div class="container topic_item_container" >
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">环境光开关</p>
+                <p class="topic_item_cell_hint_text">打开此选项即可打开环境光模拟</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <input id="switch_light_state" class="pull-right switch" type="checkbox" name="my-checkbox" {% if light_state == '1' %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">环境光颜色</p>
+                <p id="item_light_color_hint" class="topic_item_cell_hint_text">当前颜色：{{ light_color_str }}</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button class="btn btn-default" style="width: 78px" onclick="showColorPickerDialog()" >选择颜色</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="topic_item_row">
+            <div class="topic_item_cell" >
+                <p class="topic_content">环境亮度</p>
+                <p id="item_light_level_hint" class="topic_item_cell_hint_text">当前亮度：{{ light_level }}%</p>
+            </div>
+            <div class="topic_item_cell_action">
+                <div class="topic_item_cell_action">
+                    <button class="btn btn-default" style="width: 78px" onclick="showLightLevelPicketDialog()" >选择亮度</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+{% endblock toolbar_body %}
+
+
+{% block js_rescoures %}
+var lightTempColor = {{ light_color }};
+var lightTempLevel = {{ light_level }};
+var lightColor = {{ light_color }};
+var lightLevel = {{ light_level }};
+
+
+
+{% endblock js_rescoures %}

@@ -1,0 +1,25 @@
+.topic_item_container{
+    height: 100%;
+}
+
+.topic_item_row{
+    display: table-row;
+    width: 100%;
+}
+
+.topic_item_cell{
+    height: 100%;
+    display: table-cell;
+    width: 100%;
+}
+
+.topic_item_cell_action{
+    display: table-cell;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.topic_item_cell_hint_text{
+    color: #999;
+}

@@ -1,0 +1,22 @@
+.login_input_div{
+    width: 100%;
+    height: 52px;
+    margin-top: 16px;
+}
+
+.login_button{
+    width: 448px;
+    padding: 10px;
+    font-size: 18px
+}
+
+.login_forget_password{
+    color: #999;
+    display:block;
+    margin-top: 16px;
+}
+
+.login_diver{
+    width: 100%;
+    margin-top: 16px;
+}

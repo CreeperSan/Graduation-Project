@@ -296,8 +296,25 @@ u8 	 W25QXX_SPI_ReadWriteByte(u8 TxData)
 	
 	SPI_I2S_SendData(SPI1, TxData); //Í¨¹ýÍâÉèSPIx·¢ËÍÒ»¸öbyte  Êý¾Ý
 		
-  while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET){} //µÈ´ý½ÓÊÕÍêÒ»¸öbyte  
+  while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET){} //ÖˆÕ½Þ“Ë•ÎªÒ»Ù¶byte  
  
 	return SPI_I2S_ReceiveData(SPI1); //·µ»ØÍ¨¹ýSPIx×î½ü½ÓÊÕµÄÊý¾Ý	
+	
+//	while((SPI1->SR&SPI_I2S_FLAG_TXE)==0);	//ç­‰å¾…å‘é€åŒºç©º			  
+//	SPI1->DR=TxData;	 	  										//å‘é€ä¸€ä¸ªç©ºæ•°æ®äº§ç”Ÿè¾“å…¥æ•°æ®çš„æ—¶é’Ÿ 
+//	while((SPI1->SR&SPI_I2S_FLAG_RXNE)==0); //ç­‰å¾…æŽ¥æ”¶å®Œä¸€ä¸ªbyte  
+//	return SPI1->DR;  		
 }
 
+static u8 flash_buffer[1];
+
+u8   FLASH_Read(u32 address)
+{
+	W25QXX_Read(flash_buffer,address,FLASH_Size);
+	return flash_buffer[0];
+}
+void FLASH_Write(u32 address,u8 value)
+{
+	flash_buffer[0] = value;
+	W25QXX_Write(flash_buffer,address,FLASH_Size);
+}

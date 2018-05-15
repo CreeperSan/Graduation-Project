@@ -1,5 +1,6 @@
 #include "UART.h"
 #include "stdio.h"
+#include "delay.h"
 
 /**
 	* 串口的初始化
@@ -13,6 +14,7 @@ void UART_Init(void)
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1,ENABLE);
 	
 	//GPIO初始化
@@ -26,6 +28,15 @@ void UART_Init(void)
 	gpio_structure.GPIO_PuPd = GPIO_PuPd_UP;
 	gpio_structure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA,&gpio_structure);
+
+	gpio_structure.GPIO_Mode = GPIO_Mode_OUT;
+	gpio_structure.GPIO_OType = GPIO_OType_PP;
+	gpio_structure.GPIO_Pin = GPIO_Pin_8;
+	gpio_structure.GPIO_PuPd = GPIO_PuPd_UP;
+	gpio_structure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_Init(GPIOD, &gpio_structure);
+	GPIO_SetBits(GPIOD, GPIO_Pin_8);
+
 	
 	//串口初始化
 	
@@ -82,5 +93,12 @@ int fputc(int ch, FILE *f)
 	while((USART1->SR&0X40)==0);//循环发送,直到发送完毕   
 	USART1->DR = (u8) ch;      
 	return ch;
+}
+
+void UART_Reset()
+{
+	GPIO_ResetBits(GPIOD, GPIO_Pin_8);
+	delay_ms(300);
+	GPIO_SetBits(GPIOD, GPIO_Pin_8);
 }
 

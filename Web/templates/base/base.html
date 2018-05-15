@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock title %} - 毕业设计 - 14010040</title>
+    <meta name="viewport" content="width=device-width,inital-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">  
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">  
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrapValidator.css' %}"/>
+    <link rel="stylesheet" href="{% static 'common/css/toolbar.css' %}" type="text/css" />
+    <script src="{% static 'lib/jquery/js/jquery.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/js/bootstrapValidator.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'common/css/common.css' %}">{% block css_js_reference %}{% endblock css_js_reference %}
+    <style>
+        *{font-family:'Microsoft Yahei';}{% block css_rescoures %}{% endblock css_rescoures %}
+    </style>
+</head>
+<body>{% block content %}{% endblock content %}
+    <script type="text/javascript">{% block js_rescoures %}{% endblock js_rescoures %}</script>
+</body>
+</html>

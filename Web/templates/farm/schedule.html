@@ -1,0 +1,197 @@
+{% extends 'base/base_toolbar.html' %}
+{% load staticfiles %}
+
+{% block title %}定时{% endblock title %}
+
+{% block css_js_reference %}
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic_item.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/common_topic_action_button.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'farm/css/schedule.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'common/css/icon.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'lib/bootstrap-switch/bootstrap-switch.css' %}" type="text/css" />
+    <script src="{% static 'lib/bootstrap-switch/bootstrap-switch.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'common/css/dialog.css' %}" type="text/css" />
+    <script src="{% static 'common/js/dialog.js' %}"></script>
+    <script src="{% static 'common/js/ajax_request.js' %}"></script>
+    <script src="{% static 'common/js/anime.js' %}"></script>
+    <script src="{% static 'farm/js/schedule.js' %}"></script>
+{% endblock css_js_reference %}
+
+{% block toolbar_dialog %}
+    <div id="dialog_background" class="dialog_background" style="display: none;">
+        <div id="dialog_self" class="dialog_self">
+            <a id="dialog_close" class="dialog_close" href="javascript:void(0)" onclick="hideDialog()"><img src="{% static 'common/icon/ic_close_36px.svg' %}"></a>
+            <p id="dialog_title" class="dialog_title" >title</p>
+            <hr>
+            <div style="padding-left: 32px;padding-right: 32px;">
+                <div id="dialog_username_div" class="row clearfix">
+                    <div class="input-group" style="width: 100%;padding-left: 16px;padding-right: 16px;">
+                        <span class="input-group-addon" style="width: 84px;">名称</span>
+                        <input id="dialog_username_input" type="text" onkeyup="value=value.replace('\n','').replace(' ','')" class="form-control" placeholder="必填，定时的名称" maxlength="18">
+                    </div>
+                </div>
+                <div class="schedule_item_switch_div" style="padding-top: 16px;">
+                    <span>是否打开定时 </span>
+                    <div class="schedule_item_switch" style="display: inline;">
+                        <input id="dialog_is_active" class="pull-right switch" type="checkbox" name="my-checkbox" checked="checked">
+                    </div>
+                </div>
+                <div class="btn-group btn-group-lg" style="width: 100%;margin-top: 16px;">
+                    <button type="button" onclick="onRepeatTypeClick(this)" id="repeatTypeNo" class="btn btn-default schedule_circle_state_check">不重复</button>
+                    <button type="button" onclick="onRepeatTypeClick(this)" id="repeatTypeDay" class="btn btn-default schedule_circle_state_uncheck">按日期重复</button>
+                    <button type="button" onclick="onRepeatTypeClick(this)" id="repeatTypeWeek" class="btn btn-default">按星期重复</button>
+                </div>
+                <div id="dialog_weekday_div" class="btn-group btn-group-lg" style="width: 100%;margin-top: 16px;">   
+                    <!-- 星期选择 -->
+                    <button onclick="onWeekdayClick(this)" id="weekdaySun" type="button" class="btn btn-default schedule_circle_state_check">日</button>
+                    <button onclick="onWeekdayClick(this)" id="weekdayMon" type="button" class="btn btn-default schedule_circle_state_uncheck">一</button>
+                    <button onclick="onWeekdayClick(this)" id="weekdayTue" type="button" class="btn btn-default schedule_circle_state_uncheck">二</button>
+                    <button onclick="onWeekdayClick(this)" id="weekdayWen" type="button" class="btn btn-default schedule_circle_state_uncheck">三</button>
+                    <button onclick="onWeekdayClick(this)" id="weekdayThu" type="button" class="btn btn-default schedule_circle_state_uncheck">四</button>
+                    <button onclick="onWeekdayClick(this)" id="weekdayFri" type="button" class="btn btn-default schedule_circle_state_uncheck">五</button>
+                    <button onclick="onWeekdayClick(this)" id="weekdaySat" type="button" class="btn btn-default schedule_circle_state_uncheck">六</button>
+                </div>
+                <!-- 重复周期输入 -->
+                <div class="row clearfix">
+                    <div class="col-md-5 column">
+                        <div id="dialog_circle_div" class="row clearfix" style="width: 100%;margin-top: 16px;">
+                            <div class="input-group" style="padding-left: 16px;padding-right: 16px;width: 100%;">
+                                <span class="input-group-addon" style="width: 84px;">周期</span>
+                                <input id="dialog_circle_input" type="number" class="form-control" placeholder="必填，定时重复的单位周期" min="0" max="99999">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" style="margin-top: 16px;margin-left: 0px;padding-left: 0px;">
+                    <div class="row clearfix">
+                        <div class="col-md-5 column">
+                            <div id="dialog_hour_div" class="row clearfix" style="width: 100%;">
+                                <div class="input-group" style="padding-left: 16px;padding-right: 16px;width: 100%;">
+                                    <span class="input-group-addon" style="width: 84px;">小时</span>
+                                    <input id="dialog_hour_input" type="number" class="form-control" placeholder="必填，定时执行的小时数 ( 24小时制 )" min="0" max="23">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 column">
+                            <div id="dialog_minute_div" class="row clearfix" style="width: 100%;">
+                                <div class="input-group" style="padding-left: 16px;padding-right: 16px;width: 100%;">
+                                    <span class="input-group-addon" style="width: 84px;">分钟</span>
+                                    <input id="dialog_minute_input" type="number" class="form-control" placeholder="必填，定时执行的分钟数" min="0" max="59">
+                                </div>
+                            </div>     
+                        </div>
+                    </div>
+                </div>
+                <div id="dialog_content_action_pick_div" style="margin-top: 16px;">
+                    <select id="dialog_content_target_select" style="padding: 12px 8px 12px 8px;height: 48px;max-width: 160px;display: inline;margin: 4px;" class="form-control" onchange="onTypeItemSelected(this)">
+                        <option value="target_none" selected>请选择对象</option>
+                        <option value="target_temp_auto">温度自动控制</option>
+                        <option value="target_humidity_auto">空气湿度自动控制</option>
+                        <option value="target_dirt_humdity_auto">土壤湿度自动控制</option>
+                        <option value="target_fertilization_auto">自动施肥</option>
+                        <option value="target_water_auto">自动浇水</option>
+                        <option value="target_fertilization">施肥</option>
+                        <option value="target_water">浇水</option>
+                        <option value="target_fan">风扇</option>
+                        <option value="target_heat">电热膜</option>
+                        <option value="target_device1">自定义设备 1</option>
+                        <option value="target_device2">自定义设备 2</option>
+                        <option value="target_device3">自定义设备 3</option>
+                        <option value="target_device4">自定义设备 4</option>
+                        <option value="target_light">环境光开关</option>
+                        <option value="target_light_color">环境光颜色</option>
+                        <option value="target_light_level">环境光亮度</option>
+                    </select>
+                    <select id="dialog_content_value_select" style="padding: 12px 8px 12px 8px;height: 48px;max-width: 126px;display: inline;margin: 4px;" class="form-control" onchange="onValueItemSelected(this)" >
+                        <option class="value_none_target" value="value_none_target" selected>请先选择对象</option>
+                        <option class="value_none" style="display: none;"  value="value_none">请选择操作</option>
+                        <option class="value_state" style="display: none;" value="value_on">打开</option>
+                        <option class="value_state" style="display: none;" value="value_off">关闭</option>
+                        <option class="value_color" style="display: none;" value="value_red">红色</option>
+                        <option class="value_color" style="display: none;" value="value_green">绿色</option>
+                        <option class="value_color" style="display: none;" value="value_blue">蓝色</option>
+                        <option class="value_color" style="display: none;" value="value_yellow">黄色</option>
+                        <option class="value_color" style="display: none;" value="value_purple">紫色</option>
+                        <option class="value_color" style="display: none;" value="value_cyan">青色</option>
+                        <option class="value_color" style="display: none;" value="value_white">白色</option>
+                        <option class="value_percent" style="display: none;" value="value_0">0%</option>
+                        <option class="value_percent" style="display: none;" value="value_10">10%</option>
+                        <option class="value_percent" style="display: none;" value="value_20">20%</option>
+                        <option class="value_percent" style="display: none;" value="value_30">30%</option>
+                        <option class="value_percent" style="display: none;" value="value_40">40%</option>
+                        <option class="value_percent" style="display: none;" value="value_50">50%</option>
+                        <option class="value_percent" style="display: none;" value="value_60">60%</option>
+                        <option class="value_percent" style="display: none;" value="value_70">70%</option>
+                        <option class="value_percent" style="display: none;" value="value_80">80%</option>
+                        <option class="value_percent" style="display: none;" value="value_90">90%</option>
+                        <option class="value_percent" style="display: none;" value="value_100">100%</option>
+                    </select>
+                </div>
+                <!-- 确定 取消按钮 -->
+                <hr id="dialog_content_button_hr">
+                <div id="dialog_content_button" style="text-align:right;margin-right: 32px;">
+                    <button onclick="onDelete()" id="dialog_content_delete" style="padding: 16px 26px 16px 26px;font-size: 16px;border: 0px;background-color: rgba(0,0,0,0);color: #f00;float: left;">删除</button>
+                    <button onclick="onConfirm()" id="dialog_content_confirm" style="padding: 16px 26px 16px 26px;font-size: 16px;border: 0px;background-color: rgba(0,0,0,0);color: rgb(90,183,93);">确定</button>
+                    <button onclick="onCancel()" style="padding: 16px 26px 16px 26px;font-size: 16px;border: 0px;background-color: rgba(0,0,0,0);">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock toolbar_dialog %}
+
+
+
+{% block toolbar_body %}
+        
+
+        <img class="topic_icon" src="{% static 'common/icon/ic_clock.png' %}">
+        <button class="btn btn-success topic_action_button" onclick="showAddDialog()">添加定时</button>
+        <h3 class="topic_title topic_title">定时</h3>
+        <hr>
+
+        {% for scheduleItem in scheduleList %}
+
+
+        <div class="container" >
+            <div class="schedule_item_row">
+                <div class="schedule_item_title">
+                    <p class="topic_content" >{{ scheduleItem.name }}</p>
+                    <p >{{ scheduleItem.hour }}:{{ scheduleItem.minute }}</p>
+                    {% if scheduleItem.repeat_type == '0' %}
+                    <p class="schedule_item_repeat">不重复</p>
+                    {% elif scheduleItem.repeat_type == '1' %}
+                    <p class="schedule_item_repeat">每隔 {{ scheduleItem.repeat_value }} 天重复</p>
+                    {% elif scheduleItem.repeat_type == '2' %}
+                    <p class="schedule_item_repeat">{{ scheduleItem.repeat_str }}</p>
+                    {% else %}
+                    <p class="schedule_item_repeat">定时参数设置异常</p>
+                    {% endif %}
+                </div>
+                <div class="schedule_item_switch_div" >
+                    <div class="schedule_item_switch">
+                        <input  class="pull-right switch" type="checkbox" name="my-checkbox" onchange="onSwitchChange('{{ scheduleItem.name|safe }}',this,scheduleList)" {% if scheduleItem.is_active == 'true' %}checked="checked"{% endif %}>
+                    </div>
+                </div>
+                <div class="schedule_item_more_div" onclick="showEditDialog(scheduleList,'{{ scheduleItem.name|safe }}')">
+                    <img class="icon_clickable" src="{% static 'common/icon/ic_more_vert.svg' %}">
+                </div>
+            </div>
+            <hr>
+        </div>
+
+
+        {% endfor %}
+
+    
+{% endblock toolbar_body %}
+
+{% block js_rescoures %}
+    $.fn.bootstrapSwitch.defaults.onColor = 'success';
+    $.fn.bootstrapSwitch.defaults.offColor = 'default';
+    $('#test_switch1').bootstrapSwitch();
+    $('.switch').bootstrapSwitch();
+
+    var scheduleList =  '{"data":{{ scheduleJsonPart|safe }} }';
+
+{% endblock js_rescoures %}
